@@ -115,3 +115,13 @@ sys_sysinfo(void)
   }
   return -1;
 }
+
+// trace system call
+uint64
+sys_trace(void)
+{
+  int mask;
+  argint(0, &mask); 
+  myproc()->trace_mask = mask;
+  return 0;
+}
