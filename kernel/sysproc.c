@@ -112,7 +112,6 @@ sys_sysinfo(void)
   if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)
     return -1;
   return 0;
-
 }
 
 // trace system call
