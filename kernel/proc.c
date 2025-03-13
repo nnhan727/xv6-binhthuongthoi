@@ -693,3 +693,21 @@ procdump(void)
     printf("\n");
   }
 }
+
+// Get the number of unused processes
+uint64 nproc(void)
+{
+  uint64 nproc = 0;
+  struct proc *p;
+
+  for (p=proc; p < &proc[NPROC]; p++)
+  {
+    // make sure this process is not accessed while the loop is checking (preventing race condition)
+    acquire(&p->lock);
+    if (p->state != UNUSED)
+      ++nproc;
+    release(&p->lock);
+  }
+
+  return nproc;
+}
