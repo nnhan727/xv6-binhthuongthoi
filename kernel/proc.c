@@ -695,7 +695,7 @@ procdump(void)
   }
 }
 
-// Get the number of unused processes
+// Get the number of processes in use
 uint64 nproc(void)
 {
   uint64 nproc = 0;
