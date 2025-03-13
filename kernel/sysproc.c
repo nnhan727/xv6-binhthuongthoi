@@ -100,6 +100,7 @@ sys_sysinfo(void)
   // user pointer to sysinfo struct
   uint64 addr;
 
+  // check if this pointer is a valid user space address
   argaddr(0, &addr);
   if (addr)
   {
@@ -109,8 +110,9 @@ sys_sysinfo(void)
     info.freemem = freemem();
     info.nproc = nproc();
     
+    // copying the struct back to user space
     if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)
-        return -1;
+      return -1;
     return 0;
   }
   return -1;
