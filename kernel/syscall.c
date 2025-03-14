@@ -171,7 +171,7 @@ syscall(void)
     p->trapframe->a0 = syscalls[num]();
 
     if (p->trace_mask & (1 << num)) {
-      printf("%d: system %s -> %lld\n", p->pid, 
+      printf("%d: syscall %s -> %lld\n", p->pid, 
             syscallnames[num], (long long)p->trapframe->a0);
     }
   } else {
