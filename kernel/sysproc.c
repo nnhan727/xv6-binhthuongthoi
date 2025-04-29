@@ -107,6 +107,9 @@ sys_sysinfo(void)
 
   info.freemem = freemem();
   info.nproc = nproc();
+  info.loadavg_1m = get_loadavg_1m();
+  info.loadavg_5m = get_loadavg_5m();
+  info.loadavg_15m = get_loadavg_15m();
   
   // copying the struct back to user space
   if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)

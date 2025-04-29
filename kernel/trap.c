@@ -166,6 +166,12 @@ clockintr()
   if(cpuid() == 0){
     acquire(&tickslock);
     ticks++;
+
+    // 1000000 = 1/10 seconds so 50 tick is 5 second
+    // all 3 loadavg are updated every 5 seconds
+    if (ticks % 50 == 0)
+      calc_loadavg();
+
     wakeup(&ticks);
     release(&tickslock);
   }

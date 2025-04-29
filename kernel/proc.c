@@ -712,3 +712,36 @@ uint64 nproc(void)
 
   return nproc;
 }
+
+const int SCALEUP = 1000;
+
+const int ALPHA_1m = 920;       // e^(-5/60) * SCALEUP
+const int ALPHA_5m = 984;     // e^(-5/300) * SCALEUP
+const int ALPHA_15m = 995;    // e^(-5/900) * SCALEUP
+
+int loadavg_5m = 0;
+int loadavg_1m = 0;
+int loadavg_15m = 0;
+
+void calc_loadavg(void)
+{
+  int cnt = nproc();
+  loadavg_1m = loadavg_1m * ALPHA_1m / SCALEUP + cnt * (SCALEUP - ALPHA_1m);
+  loadavg_5m = loadavg_5m * ALPHA_5m / SCALEUP + cnt * (SCALEUP - ALPHA_5m);
+  loadavg_15m = loadavg_15m * ALPHA_15m / SCALEUP + cnt * (SCALEUP - ALPHA_15m);
+}
+
+int get_loadavg_1m(void)
+{
+  return loadavg_1m;
+}
+
+int get_loadavg_5m(void)
+{
+  return loadavg_5m;
+}
+
+int get_loadavg_15m(void)
+{
+  return loadavg_15m;
+}
